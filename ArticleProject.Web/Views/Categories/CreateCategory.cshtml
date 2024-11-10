@@ -1,0 +1,27 @@
+﻿@model CategoryViewModel
+
+@{
+    ViewData["Title"] = "إنشاء فئة جديدة";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>إنشاء فئة جديدة</h1>
+
+<h4>الفئة</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateCategory">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input type="text" class="form-control" asp-for="Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="إضافة" class="btn btn-primary mt-5" />
+                <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<AuthorViewModel>
+
+@{
+    ViewData["Title"] = "الناشرون";
+    Layout = "_AdminLayout";
+}
+
+<h1>الناشرون</h1>
+<form asp-action="Index">
+    <div class="input-group input-group-sm mb-3">
+        <input type="text" name="searchItem" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        <span class="input-group-text" id="inputGroup-sizing-sm">
+            <input type="submit" class="btn btn-priamry" value="بحث" />
+        </span>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.UserId)</th>
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.FullName)</th>
+            <th>@Html.DisplayNameFor(model => model.PictureUrl)</th>
+            <th>@Html.DisplayNameFor(model => model.Bio)</th>
+            <th>@Html.DisplayNameFor(model => model.FaceBookLink)</th>
+            <th>@Html.DisplayNameFor(model => model.InstegramLink)</th>
+            <th>@Html.DisplayNameFor(model => model.XSiteLink)</th>
+            <th>تعديل</th>
+            <th>حذف</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@Html.DisplayFor(modelitem => item.Id)</th>
+                <th>@Html.DisplayFor(modelitem => item.UserId)</th>
+                <th>@Html.DisplayFor(modelitem => item.UserName)</th>
+                <th>@Html.DisplayFor(modelitem => item.FullName)</th>
+                <th><img src="~/img/UsersImages/@Html.DisplayFor(modelitem=>item.PictureUrl)" class="rounded-circle" width="50" height="50" alt="Alternate Text" /></th>
+                <th>@Html.DisplayFor(modelitem => item.Bio)</th>
+                <th>@Html.DisplayFor(modelitem => item.FaceBookLink)</th>
+                <th>@Html.DisplayFor(modelitem => item.InstegramLink)</th>
+                <th>@Html.DisplayFor(modelitem => item.XSiteLink)</th>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">تعديل</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">حذف</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

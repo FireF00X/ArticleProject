@@ -1,0 +1,20 @@
+﻿@model CategoryViewModel
+
+@{
+    ViewData["Title"] = "تعديل الفئة";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>تعديل الفئة</h1>
+<form asp-action="Edit">
+    <div class="mb-3">
+        <label asp-for="Id" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="Id">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="Name">
+    </div>
+    <input value="حقظ" type="submit" class="btn btn-primary mt-5" />
+    <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+</form>

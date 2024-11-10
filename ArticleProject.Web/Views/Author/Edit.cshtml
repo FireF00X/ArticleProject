@@ -1,0 +1,48 @@
+﻿@model AuthorViewModel
+
+@{
+    ViewData["Title"] = "تعديل الناشر";
+    Layout = "_AdminLayout";
+}
+
+<h1>تعديل الناشر</h1>
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="Id" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="Id" readonly>
+    </div>
+    <div class="mb-3">
+        <label asp-for="UserId" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="UserId" readonly>
+    </div>
+    <div class="mb-3">
+        <label asp-for="UserName" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="UserName" readonly>
+    </div>
+    <div class="mb-3">
+        <label asp-for="FullName" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="FullName">
+    </div>
+    <div class="mb-3">
+        <label asp-for="PictureFromUser" class="form-label"></label>
+        <input type="file" class="form-control" asp-for="PictureFromUser">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Bio" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="Bio">
+    </div>
+    <div class="mb-3">
+        <label asp-for="FaceBookLink" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="FaceBookLink">
+    </div>
+    <div class="mb-3">
+        <label asp-for="InstegramLink" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="InstegramLink">
+    </div>
+    <div class="mb-3">
+        <label asp-for="XSiteLink" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="XSiteLink">
+    </div>
+    <input value="حقظ" type="submit" class="btn btn-primary mt-5" />
+    <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+</form>
