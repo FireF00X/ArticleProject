@@ -1,0 +1,29 @@
+﻿@model AuthorPostViewModel
+@inject IUnitOfWork _repo;
+@{
+    ViewData["Title"] = "تعديل المنشور";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var categories = await _repo.CreateRepo<Category, int>().GetAllAsync();
+}
+<h1>تعديل المنشور</h1>
+<form asp-action="Edit" enctype="multipart/form-data">
+    <img src="~/img/PostImages/@Html.DisplayFor(model=>model.PostImageName)"  width="200" height="200" />
+    <div class="mb-3">
+        <label asp-for="PostImageUrl" class="form-label"></label>
+        <input type="file" class="form-control" asp-for="PostImageUrl">
+    </div>    
+    <div class="mb-3">
+        <label asp-for="PostCategory" class="form-label"></label>
+        <select class="form-control" asp-for="CategoryId" asp-items="new SelectList(categories,nameof(Category.Id),nameof(Category.Name))"></select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PostTitle" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="PostTitle">
+    </div>
+    <div class="mb-3">
+        <label asp-for="PostDescription" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="PostDescription">
+    </div>    
+    <input value="حقظ" type="submit" class="btn btn-primary mt-5" />
+    <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+</form>

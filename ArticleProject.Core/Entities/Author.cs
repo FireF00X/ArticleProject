@@ -16,5 +16,7 @@ namespace ArticleProject.Core.Entities
         public string? FaceBookLink { get; set; }
         public string? InstegramLink { get; set; }
         public string? XSiteLink { get; set; }
+
+        public List<AuthorPost> AuthorPosts { get; set; }
     }
 }

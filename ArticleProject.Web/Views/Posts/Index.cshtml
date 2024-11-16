@@ -1,0 +1,66 @@
+﻿@model IEnumerable<AuthorPostViewModel>
+
+@{
+    ViewData["Title"] = "المنشورات";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>المنشورات</h1>
+<form asp-action="Index">
+    <div class="input-group input-group-sm mb-3">
+        <input type="text" name="searchItem" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+        <span class="input-group-text" id="inputGroup-sizing-sm">
+            <input type="submit" class="btn btn-priamry" value="بحث" />
+        </span>
+    </div>
+</form>
+@if (@Model.Count() > 0)
+{
+    <p>
+        <a asp-action="Create">إضافة منشور</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.PostTitle)</th>
+                <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                <th>تفاصيل</th>
+                <th>تعديل</th>
+                <th>حذف</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PostTitle)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                    <td><a asp-action="Details" asp-route-id="@item.Id">معلومات</a></td>
+                    <td><a asp-action="Edit" asp-route-id="@item.Id">تعديل</a></td>
+                    <td><a asp-action="Delete" asp-route-id="@item.Id">حذف</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { pageIndex = page }),
+                    new X.PagedList.Mvc.Core.PagedListRenderOptions
+            {
+                DisplayItemSliceAndTotal = false,
+                ContainerDivClasses = new[] { "navigation" },
+                MaximumPageNumbersToDisplay = 2,
+                UlElementClasses = new[] { "pagination justify-content-center" },
+                LiElementClasses = new[] { "page-item" },
+                PageClasses = new[] { "page-link" },
+
+            })
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        لا يوجد فئات حالية قم بإضافة فئات
+    </div>
+}

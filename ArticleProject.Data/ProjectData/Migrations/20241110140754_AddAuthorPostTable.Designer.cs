@@ -4,6 +4,7 @@ using ArticleProject.Data.ProjectData.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArticleProject.Data.ProjectData.Migrations
 {
     [DbContext(typeof(ArticleDbContext))]
-    partial class ArticleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241110140754_AddAuthorPostTable")]
+    partial class AddAuthorPostTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +62,7 @@ namespace ArticleProject.Data.ProjectData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors", (string)null);
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("ArticleProject.Core.Entities.AuthorPost", b =>
@@ -112,7 +115,7 @@ namespace ArticleProject.Data.ProjectData.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("AuthorPosts", (string)null);
+                    b.ToTable("AuthorPosts");
                 });
 
             modelBuilder.Entity("ArticleProject.Core.Entities.Category", b =>
@@ -129,7 +132,7 @@ namespace ArticleProject.Data.ProjectData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ArticleProject.Core.Entities.AuthorPost", b =>

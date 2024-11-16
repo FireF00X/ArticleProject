@@ -1,0 +1,44 @@
+﻿@model AuthorPostViewModel  
+@inject IUnitOfWork _repo;
+@{
+    ViewData["Title"] = "انشاء منشور";
+    Layout = "_AdminLayout";
+    var Categeories = new SelectList(await _repo.CreateRepo<Category, int>().GetAllAsync(), nameof(Category.Id), nameof(Category.Name));
+}
+
+<h1>إنشاء منشور جديد</h1>
+
+<h4>منشور</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="PostImageUrl" class="form-label"></label>
+                <input type="file" class="form-control" asp-for="PostImageUrl">
+                <span asp-validation-for="PostImageUrl" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PostTitle" class="form-label"></label>
+                <input type="text" class="form-control" asp-for="PostTitle">
+                <span asp-validation-for="PostTitle" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PostDescription" class="form-label"></label>
+                <textarea class="form-control" asp-for="PostDescription"></textarea>
+                <span asp-validation-for="PostDescription" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CategoryId" class="form-label"></label>
+                <select class="form-control" asp-for="CategoryId" asp-items="@Categeories">
+                    <option value="null">--Select Department--</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="إضافة" class="btn btn-primary mt-5" />
+                <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+            </div>
+        </form>
+    </div>
+</div>

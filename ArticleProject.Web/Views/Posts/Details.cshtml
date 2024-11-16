@@ -1,0 +1,51 @@
+﻿@model AuthorPostViewModel
+@{
+    ViewData["Title"] = "تفاصيل المنشور";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>تفاصيل المنشور</h1>
+<div>
+    <img src="~/img/PostImages/@Html.DisplayFor(model=>model.PostImageName)" width="200" height="200" alt="Alternate Text" />
+    <div class="mb-3">
+        <label asp-for="Id" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="Id" readonly>
+    </div>
+    <div class="mb-3">
+       <label asp-for="UserId" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="UserId" readonly>
+    </div> 
+    <div class="mb-3">
+       <label asp-for="AuthorId" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="AuthorId" readonly>
+    </div> 
+    <div class="mb-3">
+        <label asp-for="UserName" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="UserName" readonly>
+    </div>
+    <div class="mb-3">
+        <label asp-for="FullName" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="FullName" readonly>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="CategoryId" readonly>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PostCategory" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="PostCategory" readonly>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PostTitle" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="PostTitle" readonly>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PostDescription" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="PostDescription" readonly>
+    </div>   
+    <div class="mb-3">
+        <label asp-for="CreatedAt" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="CreatedAt" readonly>
+    </div>
+    <a asp-action="Edit" class="btn btn-primary mt-5" asp-route-id="@Model.Id">تعديل</a>
+    <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+</div>
