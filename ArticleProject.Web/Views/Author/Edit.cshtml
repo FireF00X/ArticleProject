@@ -1,30 +1,21 @@
 ﻿@model AuthorViewModel
-
+@inject IAuthorizationService _auth;
 @{
     ViewData["Title"] = "تعديل الناشر";
     Layout = "_AdminLayout";
+    var result = await _auth.AuthorizeAsync(User, "Admin");
 }
 
 <h1>تعديل الناشر</h1>
 <form asp-action="Edit" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label asp-for="Id" class="form-label"></label>
-        <input type="text" class="form-control" asp-for="Id" readonly>
-    </div>
-    <div class="mb-3">
-        <label asp-for="UserId" class="form-label"></label>
-        <input type="text" class="form-control" asp-for="UserId" readonly>
-    </div>
-    <div class="mb-3">
-        <label asp-for="UserName" class="form-label"></label>
-        <input type="text" class="form-control" asp-for="UserName" readonly>
-    </div>
     <div class="mb-3">
         <label asp-for="FullName" class="form-label"></label>
         <input type="text" class="form-control" asp-for="FullName">
     </div>
     <div class="mb-3">
         <label asp-for="PictureFromUser" class="form-label"></label>
+        <br />
+        <img src="~/img//UsersImages/@Html.DisplayFor(Model=>Model.PictureUrl)" width="200" height="200"/>
         <input type="file" class="form-control" asp-for="PictureFromUser">
     </div>
     <div class="mb-3">
@@ -44,5 +35,8 @@
         <input type="text" class="form-control" asp-for="XSiteLink">
     </div>
     <input value="حقظ" type="submit" class="btn btn-primary mt-5" />
-    <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+    @if (result.Succeeded)
+    {
+        <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+    }
 </form>

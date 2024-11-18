@@ -2,11 +2,13 @@
 using ArticleProject.Data.IRepository;
 using ArticleProject.Data.Specifications.CategorySpecifications;
 using ArticleProject.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList.Extensions;
 
 namespace ArticleProject.Web.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly IUnitOfWork _repo;

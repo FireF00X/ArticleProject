@@ -17,5 +17,12 @@ namespace ArticleProject.Data.Specifications.PostsSpecifications
         {
 
         }
+        public PostsSearchingItem(string? item) :
+            base(a=>
+                 item.IsNullOrEmpty()||
+                 a.UserName.Trim().ToLower().Contains(item.Trim().ToLower()))
+        {
+
+        }
     }
 }

@@ -24,10 +24,10 @@ namespace ArticleProject.Web.ViewModels
         [DisplayName("السيرة الذاتية")]
         public string Bio { get; set; }
         [DisplayName("حساب الفيسبوك")]
-        public string FaceBookLink { get; set; }
+        public string? FaceBookLink { get; set; }
         [DisplayName("حساب الانسجرام")]
-        public string InstegramLink { get; set; }
+        public string? InstegramLink { get; set; }
         [DisplayName("حساب منصة X")]
-        public string XSiteLink { get; set; }
+        public string? XSiteLink { get; set; }
     }
 }

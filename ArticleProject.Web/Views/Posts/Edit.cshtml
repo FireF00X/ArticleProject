@@ -1,9 +1,11 @@
 ﻿@model AuthorPostViewModel
 @inject IUnitOfWork _repo;
+@inject IAuthorizationService auth;
 @{
     ViewData["Title"] = "تعديل المنشور";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     var categories = await _repo.CreateRepo<Category, int>().GetAllAsync();
+    var result = await auth.AuthorizeAsync(User, "Admin");
 }
 <h1>تعديل المنشور</h1>
 <form asp-action="Edit" enctype="multipart/form-data">
@@ -25,5 +27,8 @@
         <input type="text" class="form-control" asp-for="PostDescription">
     </div>    
     <input value="حقظ" type="submit" class="btn btn-primary mt-5" />
-    <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+    @if (result.Succeeded)
+    {
+        <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
+    }
 </form>

@@ -1,7 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using System.Security.Claims
+@using ArticleProject.Data.Specifications.AuthorSpecifications
+@inject IUnitOfWork _repo;
+@inject IAuthorizationService _auth;
 @{
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier).ToString().Split(":")[2].Trim();
+    var ids = await _repo.CreateRepo<Author, int>().GetAllAsyncWithSpecification(new AuthorSearchingItem(userId));
+    var specificId = ids.FirstOrDefault().Id;
+    var result = await _auth.AuthorizeAsync(User, "Admin");
 }
 <!DOCTYPE html>
 <html style="font-family: Cairo, sans-serif;">
@@ -55,15 +60,18 @@
 <body style="font-family: Cairo;">
     <nav class="navbar navbar-light navbar-expand-lg navigation-clean-button">
         <div class="container">
-            <a class="navbar-brand" asp-controller="Home">الرجوع الى الصفحة</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">الرجوع الى الصفحة</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav me-auto"></ul>
-                <span class="navbar-text actions"> 
-                    <a class="btn btn-light action-button" role="button" href="#" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;">حسابي</a>
-                    <a class="btn btn-light action-button" role="button" href="#" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;">المستخدمين</a>
-                    <a class="btn btn-light action-button" role="button" href="#" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;">المقالات</a>
-                    <a class="btn btn-light action-button" role="button" asp-controller="Categories" asp-action="Index" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;">الفئات</a>
-                    <a class="btn btn-light action-button" role="button" href="#" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;background: var(--bs-red);">الرئيسة</a>
+                <span class="navbar-text actions">
+                    <a asp-controller="Author" asp-action="Edit" asp-route-id="@specificId" class="btn btn-light action-button" role="button" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;">حسابي</a>
+                    <a class="btn btn-light action-button" role="button" asp-controller="Posts" asp-action="Index" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;">المقالات</a>
+                    @if (result.Succeeded)
+                    {
+                        <a class="btn btn-light action-button" role="button" asp-controller="Categories" asp-action="Index" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;">الفئات</a>
+                        <a class="btn btn-light action-button" role="button" asp-controller="Author" asp-action="Index" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;">المستخدمين</a>
+                    }
+                    <a class="btn btn-light action-button" role="button" asp-controller="home" asp-action="Index" style="margin: 5px;width: 116.7px;margin-right: 0px;font-family: Cairo, sans-serif;background: var(--bs-red);">الرئيسة</a>
                 </span>
             </div>
         </div>

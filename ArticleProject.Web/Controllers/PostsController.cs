@@ -11,6 +11,7 @@ using ArticleProject.Data.Specifications.AuthorSpecifications;
 
 namespace ArticleProject.Web.Controllers
 {
+    [Authorize]
     public class PostsController : Controller
     {
         private readonly IUnitOfWork _repo;
@@ -24,12 +25,11 @@ namespace ArticleProject.Web.Controllers
         }
         public async Task<IActionResult> Index(string? searchItem, int? pageIndex, int pageSize = 3)
         {
-            var result = await _authorizationService.AuthorizeAsync(User, "Admin");
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).ToString().Split(":")[2].Trim(); ;
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).ToString().Split(":")[2].Trim();
             List<AuthorPost> posts;
-            if (result.Succeeded)
+            if (await isAdmin())
             {
-                posts = await _repo.CreateRepo<AuthorPost, int>().GetAllAsyncWithSpecification(new PostsSearchingItem(userId, searchItem));
+                posts = await _repo.CreateRepo<AuthorPost, int>().GetAllAsyncWithSpecification(new PostsSearchingItem(searchItem));
             }
             else
             {
@@ -127,7 +127,8 @@ namespace ArticleProject.Web.Controllers
                     if (result == 1)
                     {
                         await _repo.CompleteAsync();
-                        return RedirectToAction("Index");
+                        if (await isAdmin()) return RedirectToAction("Index");
+                        else return RedirectToAction("Index", "Admin");
                     }
                 }
             }
@@ -142,6 +143,12 @@ namespace ArticleProject.Web.Controllers
             }
             _repo.CreateRepo<AuthorPost, int>().Delete(id.Value);
             return RedirectToAction("Index");
+        }
+
+        private async Task<bool> isAdmin()
+        {
+            var result = await _authorizationService.AuthorizeAsync(User, "Admin");
+            return result.Succeeded;
         }
     }
 }
