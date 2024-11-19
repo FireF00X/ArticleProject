@@ -6,9 +6,11 @@
     <section>
         <div class="container">
             <div class="photo-card">
-                <div class="photo-background" style="background-image:url(&quot;assets/img/product-aeon-feature.jpg&quot;);"></div>
+                <div class="photo-background" style="background-image:url(&quot;assets/img/product-aeon-feature.jpg&quot;);">
+                        <img src="~/img//UsersImages/@Html.DisplayFor(item=>item.imgUrl)" style="width:100%;height:100%;"  />                    
+                </div>
                 <div class="photo-details">
-                    <h1 style="font-family: Cairo, sans-serif;">مرحبا بك صفاء&nbsp;</h1>
+                    <h1 style="font-family: Cairo, sans-serif;">@Html.DisplayFor(item=>item.fullName)&nbsp;</h1>
                     <p style="text-align: center;">يسعدنا&nbsp; انضمامك الينا , يمكنك من خلال لوحة التحكم ادارة المحتوى الخاص بك على الموقع&nbsp;</p>
                     <div class="photo-tags"></div>
                 </div>

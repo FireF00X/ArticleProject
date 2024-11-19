@@ -55,15 +55,15 @@
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="72">
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-secondary text-uppercase" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="index.html" style="font-family: Cairo, sans-serif;">مقالاتي</a><button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler text-white bg-primary navbar-toggler-right text-uppercase rounded" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+            <a class="navbar-brand" asp-controller="Home" style="font-family: Cairo, sans-serif;">مقالاتي</a><button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler text-white bg-primary navbar-toggler-right text-uppercase rounded" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
             <div class="collapse navbar-collapse text-center" id="navbarResponsive">
                 <partial name="_LoginPartial" />
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about" style="font-family: Cairo, sans-serif;">من نحن؟</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact" style="font-family: Cairo, sans-serif;">تواصل معنا</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="AllUsers.html" style="font-family: Cairo, sans-serif;">الناشرون</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-controller="Home" style="font-family: Cairo, sans-serif;">من نحن؟</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-controller="Home" style="font-family: Cairo, sans-serif;">تواصل معنا</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-controller="AllUsers" asp-action="Index" style="font-family: Cairo, sans-serif;">الناشرون</a></li>
                     <li class="nav-item mx-0 mx-lg-1"></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="index.html" style="font-family: Cairo, sans-serif;">الرئيسة</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-controller="Home" style="font-family: Cairo, sans-serif;">الرئيسة</a></li>
                     <li class="nav-item mx-0 mx-lg-1"></li>
                 </ul>
                 @if (SignInManager.IsSignedIn(User))
@@ -84,11 +84,28 @@
                 <div class="col-md-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase" style="font-family: Cairo, sans-serif;">تابعنا لتكون قريب منا</h4>
                     <ul class="list-inline">
-                        <li class="list-inline-item"><a class="btn btn-outline-light text-center btn-social rounded-circle" role="button" href="#"><i class="fa fa-facebook fa-fw"></i></a></li>
-                        <li class="list-inline-item"><a class="btn btn-outline-light text-center btn-social rounded-circle" role="button" href="#"><i class="fa fa-google-plus fa-fw"></i></a></li>
-                        <li class="list-inline-item"><a class="btn btn-outline-light text-center btn-social rounded-circle" role="button" href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
-                        <li class="list-inline-item"><a class="btn btn-outline-light text-center btn-social rounded-circle" role="button" href="#"><i class="fa fa-dribbble fa-fw"></i></a></li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light text-center btn-social rounded-circle d-flex align-items-center justify-content-center" role="button" href="#">
+                                <i class="fa fa-facebook fa-fw"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light text-center btn-social rounded-circle d-flex align-items-center justify-content-center" role="button" href="#">
+                                <i class="fa fa-google-plus fa-fw"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light text-center btn-social rounded-circle d-flex align-items-center justify-content-center" role="button" href="#">
+                                <i class="fa fa-twitter fa-fw"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light text-center btn-social rounded-circle d-flex align-items-center justify-content-center" role="button" href="#">
+                                <i class="fa fa-dribbble fa-fw"></i>
+                            </a>
+                        </li>
                     </ul>
+
                 </div>
                 <div class="col-md-4">
                     <h4 class="text-uppercase mb-4" style="font-family: Cairo, sans-serif;">من نحن ؟</h4>
@@ -98,7 +115,7 @@
         </div>
     </footer>
     <div class="text-center text-white copyright py-4">
-        <div class="container"><small style="font-family: Cairo, sans-serif;">Copyright ©&nbsp;مقالتي 2022</small></div>
+        <div class="container"><small style="font-family: Cairo, sans-serif;">Copyright ©&nbsp;مقالتي @DateTime.Now.Year</small></div>
     </div>
     <div class="d-lg-none scroll-to-top position-fixed rounded"><a class="text-center d-block rounded text-white" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
     <script src="~/bootstrap/js/bootstrap.min.js"></script>

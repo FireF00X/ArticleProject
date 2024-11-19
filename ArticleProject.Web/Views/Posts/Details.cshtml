@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "تفاصيل المنشور";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier).ToString().Split(":")[2].Trim();
 }
 <h1>تفاصيل المنشور</h1>
 <div>
@@ -11,13 +12,13 @@
         <input type="text" class="form-control" asp-for="Id" readonly>
     </div>
     <div class="mb-3">
-       <label asp-for="UserId" class="form-label"></label>
+        <label asp-for="UserId" class="form-label"></label>
         <input type="text" class="form-control" asp-for="UserId" readonly>
-    </div> 
+    </div>
     <div class="mb-3">
-       <label asp-for="AuthorId" class="form-label"></label>
+        <label asp-for="AuthorId" class="form-label"></label>
         <input type="text" class="form-control" asp-for="AuthorId" readonly>
-    </div> 
+    </div>
     <div class="mb-3">
         <label asp-for="UserName" class="form-label"></label>
         <input type="text" class="form-control" asp-for="UserName" readonly>
@@ -41,11 +42,14 @@
     <div class="mb-3">
         <label asp-for="PostDescription" class="form-label"></label>
         <input type="text" class="form-control" asp-for="PostDescription" readonly>
-    </div>   
+    </div>
     <div class="mb-3">
         <label asp-for="CreatedAt" class="form-label"></label>
         <input type="text" class="form-control" asp-for="CreatedAt" readonly>
     </div>
-    <a asp-action="Edit" class="btn btn-primary mt-5" asp-route-id="@Model.Id">تعديل</a>
+    @if (userId == Model.UserId)
+    {
+        <a asp-action="Edit" class="btn btn-primary mt-5" asp-route-id="@Model.Id">تعديل</a>
+    }
     <a asp-action="Index" class="btn btn-light mt-5">العودة للقائمة</a>
 </div>

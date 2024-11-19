@@ -20,9 +20,9 @@ namespace ArticleProject.Web.Controllers
             _repo = repo;
         }
 
-        public async Task<IActionResult> Index(string catName, int pageSize = 6, int? pageIndex = 1)
+        public async Task<IActionResult> Index(string? searchingItme, string catName, int pageSize = 6, int? pageIndex = 1)
         {
-            var posts = await _repo.CreateRepo<AuthorPost, int>().GetAllAsyncWithSpecification(new PostsForHomeSpecs(catName));
+            var posts = await _repo.CreateRepo<AuthorPost, int>().GetAllAsyncWithSpecification(new PostsForHomeSpecs(catName, searchingItme));
             var mappedPost = posts.Select(p => new AuthorPostViewModel()
             {
                 Id = p.Id,

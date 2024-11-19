@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\img\PostImages\" />
-    <Folder Include="wwwroot\img\UsersImages\" />
   </ItemGroup>
 
 </Project>

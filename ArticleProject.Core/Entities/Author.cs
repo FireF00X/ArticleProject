@@ -11,7 +11,7 @@ namespace ArticleProject.Core.Entities
         public string UserId { get; set; }
         public string UserName { get; set; }
         public string FullName { get; set; }
-        public string? PictureUrl { get; set; }
+        public string? PictureUrl { get; set; } = "DefaultUser.jpg";
         public string? Bio { get; set; }
         public string? FaceBookLink { get; set; }
         public string? InstegramLink { get; set; }

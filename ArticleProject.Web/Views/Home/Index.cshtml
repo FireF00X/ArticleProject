@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<AuthorPostViewModel>;
-@using ArticleProject.Data.Specifications.PostsSpecifications
+@inject SignInManager<IdentityUser> SignInManager
+
 @inject IUnitOfWork _repo;
 @{
     ViewData["Title"] = "Home Page";
     var categories = await _repo.CreateRepo<Category, int>().GetAllAsync();
-    var posts = await _repo.CreateRepo<AuthorPost, int>().GetAllAsyncWithSpecification(new PostsForHomeSpecs(string.Empty));
 }
 
 <header class="text-center text-white bg-primary masthead">
@@ -14,7 +14,11 @@
         <hr class="star-light">
         <h2 class="font-weight-light mb-0" style="font-family: Cairo, sans-serif;">مرحبا بك في موقع مقالاتي</h2>
         <h2 class="font-weight-light mb-0" style="font-family: Cairo, sans-serif;margin: 11px;font-size: 21px;">&nbsp; :) يسعدنا انضمامك معنا&nbsp;</h2>
-    </div><button class="btn btn-primary" type="button" style="width: 254.5625px;background: var(--bs-blue);font-family: Cairo, sans-serif;height: 50px;margin: 5px;"><i class="fa fa-sign-in"></i><span style="margin: 15px;">انضم الان&nbsp;</span></button>
+    </div>
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <a href="/Identity/account/login" class="btn btn-primary" type="button" style="width: 254.5625px;background: var(--bs-blue);font-family: Cairo, sans-serif;height: 50px;margin: 5px;"><i class="fa fa-sign-in"></i><span style="margin: 15px;">انضم الان&nbsp;</span></a>
+    }
 </header>
 
 
@@ -31,8 +35,14 @@
                             <li class="nav-item"></li>
                             <li class="nav-item"></li>
                         </ul>
-                        <form class="me-auto search-form" target="_self">
-                            <div class="d-flex align-items-center"><label class="form-label d-flex mb-0" for="search-field"><i class="fa fa-search"></i></label><input class="form-control search-field" type="search" id="search-field" name="search" placeholder="ابحث عن مقالة" style="font-family: Cairo, sans-serif;"></div>
+                        <form class="me-auto search-form" asp-action="Index">
+                            <div class="d-flex align-items-center">
+                                <label class="form-label d-flex mb-0" for="search-field">
+                                    <i class="fa fa-search"></i>
+                                </label>
+                                <input class="form-control search-field text-white" type="text" id="search-field" name="searchingItme" placeholder="ابحث عن مقالة" style="font-family: Cairo, sans-serif;">
+                                <input value="بحث" type="submit" />
+                            </div>
                         </form>
                         <ul class="navbar-nav">
                             @foreach (var item in categories)
@@ -51,24 +61,15 @@
             {
                 <div class="col" data-bss-hover-animate="pulse" style="margin: 0;margin-top: 10px;">
                     <div class="card" style="margin: 10;">
-                        <img class="card-img-top w-100 d-block" src="~/img/PostImages/@Html.DisplayFor(model=>item.PostImageName)">
+                        <img class="card-img-top w-100 d-block" style="height:160px;" src="~/img/PostImages/@Html.DisplayFor(model=>item.PostImageName)">
                         <div class="card-body">
-                            <h4 class="text-center card-title" style="font-family: Cairo, sans-serif;">@item.PostTitle</h4><a class="btn btn-primary float-end" role="button" style="font-family: Cairo, sans-serif;width: 149.875px;" asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id">قراءة</a>
+                            <h4 class="text-center card-title" style="font-family: Cairo, sans-serif;">@item.PostTitle</h4><a class="btn btn-primary float-end" role="button" style="font-family: Cairo, sans-serif;width: 149.875px;" asp-controller="Article" asp-action="Index" asp-route-id="@item.Id">قراءة</a>
                         </div>
                     </div>
                 </div>
             }
         </div>
         <nav class="text-center float-end" style="font-family: Lato, sans-serif;border-color: var(--bs-red);margin: 10px;">
-            @* <ul class="pagination">
-                    <li class="page-item text-center" style="text-align: center;"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                    <li class="page-item text-center" style="text-align: center;"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item text-center" style="text-align: center;"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item text-center" style="text-align: center;"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item text-center" style="text-align: center;"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item text-center" style="text-align: center;"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item text-center" style="text-align: center;"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                </ul> *@
             @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { pageIndex = page }),
                      new X.PagedList.Mvc.Core.PagedListRenderOptions
             {
@@ -92,7 +93,10 @@
                 <p class="lead text-center" style="font-family: Cairo, sans-serif;">نحن نوفر لك الدعم الكامل لنشر مقالاتك ومشاركتها مع الاخرين . حيث ان موقع مقالتي يضمن لك كافة الحقوق للمقالات التي تنشرها&nbsp; على الموقع&nbsp;</p>
             </div>
         </div>
-        <div class="text-center mt-4"><a class="btn btn-outline-light btn-xl" role="button" href="#"><i class="fa fa-american-sign-language-interpreting me-2"></i><span style="font-family: Cairo, sans-serif;">اشترك الان وانضم معنا&nbsp;</span></a></div>
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <div class="text-center mt-4"><a class="btn btn-outline-light btn-xl" role="button" href="/Identity/account/login"><i class="fa fa-american-sign-language-interpreting me-2"></i><span style="font-family: Cairo, sans-serif;">اشترك الان وانضم معنا&nbsp;</span></a></div>
+        }
     </div>
 </section>
 <section id="contact">

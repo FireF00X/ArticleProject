@@ -77,7 +77,8 @@ namespace ArticleProject.Web.Controllers
                 var author = _repo.CreateRepo<Author, int>().GetById(id.Value);
                 if (input.PictureFromUser is not null)
                 {
-                    FileSettings.DeleteFile(author.PictureUrl, "UsersImages");
+                    if (author.PictureUrl is not null)
+                        FileSettings.DeleteFile(author.PictureUrl, "UsersImages");
                     author.PictureUrl = FileSettings.UploadFile(input.PictureFromUser, "UsersImages");
                 }
                 author.FullName = input.FullName;
